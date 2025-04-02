@@ -24,7 +24,7 @@ app.get('/searchword', async (req, res) => {
             url: 'https://twinword-word-graph-dictionary.p.rapidapi.com/theme/',
             params: { entry: req.query.entry },
             headers: {
-                'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+                'x-rapidapi-key': '2e7fbe950bmshf27f9abe69e57dbp17b54fjsn8fd0dfdd56d8',
                 'x-rapidapi-host': 'twinword-word-graph-dictionary.p.rapidapi.com'
             }
         };
