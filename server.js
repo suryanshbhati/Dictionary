@@ -2,15 +2,18 @@ const express = require('express');
 const axios = require("axios");
 const path = require('path');
 const app = express();
-const port = 3000;
+
+// Use Render's dynamic port or default to 3000
+const port = process.env.PORT || 3000;
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    return res.sendFile('public/index.html' , {root : __dirname});
+    return res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/searchword', (req, res) => {
-    //res.send('Hello World! Surya');
-    //console.log(req.query);
     var options = {
         method: 'GET',
         url: 'https://twinword-word-graph-dictionary.p.rapidapi.com/theme/',
@@ -21,34 +24,14 @@ app.get('/searchword', (req, res) => {
         }
     };
 
-    axios.request(options).then(function (response) {
+    axios.request(options).then(response => {
         res.json(response.data);
-    }).catch(function (error) {
+    }).catch(error => {
         console.error(error);
+        res.status(500).json({ error: "Error fetching data" });
     });
-
-    // let response = {}
-    // response.data = {
-    //     entry: 'Autonomous',
-    //     request: 'autonomous',
-    //     response: 'autonomous',
-    //     theme: [
-    //       'free',    'individual',
-    //       'each',    'country',
-    //       'foreign', 'symbol',
-    //       'village', 'local',
-    //       'town'
-    //     ],
-    //     version: '7.5.7',
-    //     author: 'twinword inc.',
-    //     email: 'help@twinword.com',
-    //     result_code: '200',
-    //     result_msg: 'Success'
-    // }
-    // console.log(response.data);
-    // res.json(response.data);
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port} - http://localhost:3000`);
+    console.log(`Server running on port ${port}`);
 });
