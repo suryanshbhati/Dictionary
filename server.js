@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 
 app.get('/searchword', async (req, res) => {
     console.log("RAPIDAPI_KEY from env:", process.env.RAPIDAPI_KEY); // Debugging
+    console.log("port:", process.env.PORT);
 
     try {
         if (!req.query.entry) {
