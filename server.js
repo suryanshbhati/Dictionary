@@ -1,12 +1,10 @@
 const express = require('express');
 const axios = require("axios");
 const path = require('path');
-const app = express();
 
-// Use Render's dynamic port or default to 3000
+const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -19,7 +17,7 @@ app.get('/searchword', (req, res) => {
         url: 'https://twinword-word-graph-dictionary.p.rapidapi.com/theme/',
         params: { entry: req.query.entry },
         headers: {
-            'x-rapidapi-key': '2e7fbe950bmshf27f9abe69e57dbp17b54fjsn8fd0dfdd56d8',
+            'x-rapidapi-key': process.env.RAPIDAPI_KEY,  // Use the variable from Render
             'x-rapidapi-host': 'twinword-word-graph-dictionary.p.rapidapi.com'
         }
     };
