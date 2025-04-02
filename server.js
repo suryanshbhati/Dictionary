@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
 
 app.get('/searchword', async (req, res) => {
     try {
+        console.log("Using API Key:", process.env.RAPIDAPI_KEY); // Debugging API key
+
         if (!req.query.entry) {
             return res.status(400).json({ error: "Missing 'entry' query parameter" });
         }
@@ -22,17 +24,12 @@ app.get('/searchword', async (req, res) => {
             url: 'https://twinword-word-graph-dictionary.p.rapidapi.com/theme/',
             params: { entry: req.query.entry },
             headers: {
-                'x-rapidapi-key': process.env.RAPIDAPI_KEY, // Secure API Key
+                'x-rapidapi-key': process.env.RAPIDAPI_KEY,
                 'x-rapidapi-host': 'twinword-word-graph-dictionary.p.rapidapi.com'
             }
         };
 
         const response = await axios.request(options);
-
-        if (!response.data || Object.keys(response.data).length === 0) {
-            return res.status(404).json({ error: "No data found for this word" });
-        }
-
         res.json(response.data);
     } catch (error) {
         console.error("API Request Error:", error.message);
@@ -48,6 +45,7 @@ app.get('/searchword', async (req, res) => {
         }
     }
 });
+
 
 
 app.listen(port, () => {
