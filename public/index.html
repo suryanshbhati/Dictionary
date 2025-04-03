@@ -77,7 +77,7 @@
   <script>
     submit.addEventListener('click', (e) => {
       e.preventDefault();
-      let url = `http://localhost:3000/searchword?entry=${word.value}`;
+      let url = `https://dictionary12.onrender.com/searchword?entry=${word.value}`;
       let r = fetch(url);
       r.then((response) => {
         return response.json();
