@@ -3,8 +3,9 @@ const axios = require("axios");
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000;
 require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.get('/searchword', async (req, res) => {
     console.log("RAPIDAPI_KEY from env:", process.env.RAPIDAPI_KEY); // Debugging
-    console.log("port:", process.env.PORT);
+    console.log("PORT:", PORT);
 
     try {
         if (!req.query.entry) {
@@ -26,7 +27,7 @@ app.get('/searchword', async (req, res) => {
             url: 'https://twinword-word-graph-dictionary.p.rapidapi.com/theme/',
             params: { entry: req.query.entry },
             headers: {
-                'x-rapidapi-key': process.env.RAPIDAPI_KEY, // Using env variable
+                'x-rapidapi-key': process.env.RAPIDAPI_KEY,
                 'x-rapidapi-host': 'twinword-word-graph-dictionary.p.rapidapi.com'
             }
         };
@@ -39,7 +40,6 @@ app.get('/searchword', async (req, res) => {
     }
 });
 
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
